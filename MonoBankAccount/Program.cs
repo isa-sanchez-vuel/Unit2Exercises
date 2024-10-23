@@ -1,8 +1,10 @@
-﻿decimal currentMoney = 0;
+﻿#region TRANSACTION DATA
+decimal currentMoney = 0;
 string? input;
 int optionInt;
 bool exit = false;
 List<string> movementList = new List<string>();
+#endregion
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
