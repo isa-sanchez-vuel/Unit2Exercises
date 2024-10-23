@@ -74,7 +74,7 @@ do {
             break;
         }
     }
-    Console.WriteLine("----- " + userAccount + "----" + accountIndex);
+    //Console.WriteLine("----- " + userAccount + "----" + accountIndex);
 
     Console.WriteLine("Pin (XXXX): ");
 
@@ -90,7 +90,7 @@ do {
         }
     }
 
-    Console.WriteLine("----- " + userPin + "----" + pinIndex);
+    //Console.WriteLine("----- " + userPin + "----" + pinIndex);
 
     if (!userAccount.Equals("") && !userPin.Equals("")) userExists = true;
     else userExists = false;
