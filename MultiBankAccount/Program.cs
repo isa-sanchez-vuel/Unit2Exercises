@@ -1,21 +1,13 @@
-﻿#region TRANSACTIONS
-using System.Diagnostics;
-using System.Net.NetworkInformation;
-
-decimal currentMoney = 0;
-string? input;
-int optionInt;
-bool exit = false;
-List<string> movementList = new List<string>();
-#endregion
-
-#region USER ACCOUNT
+﻿#region USER ACCOUNT
 int accountIndex = -1;
 int pinIndex = -2;
 string userAccount = "";
 string userPin = "";
+
 bool userExists = false;
 bool positionCorrect = false;
+
+int currentUser = -1;
 
 List<string> accountList = new List<string>
 {
@@ -36,7 +28,35 @@ List<string> pinList = new List<string>
 };
 #endregion
 
+#region TRANSACTIONS
+decimal maxMoneyTransaction = 6000;
+string? input;
+int optionInt;
+bool exit = false;
+decimal currentMoney = 0;
 
+List<List<string>> accountsMovementList = new List<List<string>>
+{
+    new List<string> { "+345 | 20/10/2024 14:48:05", "-67 | 15/09/2024 14:40:05", "+82 | 27/09/2024 17:12:05", "+14 | 05/10/2024 20:10:05", "-300 | 18/10/2024 13:50:05", "+68 | 20/10/2024 10:30:05" },
+    new List<string> { "-55 | 20/10/2024 14:48:05", "-72 | 15/09/2024 14:40:05", "+12 | 27/09/2024 17:12:05", "-76", "-90 | 18/10/2024 13:50:05" },
+    new List<string> { "+268 | 20/10/2024 14:48:05", "-100 | 15/09/2024 14:40:05", "+240 | 27/09/2024 17:12:05", "-125 | 05/10/2024 15:50:05", "-56 | 13/10/2024 10:50:05", "-95 | 18/10/2024 13:50:05", "+130 | 20/10/2024 10:30:05" },
+    new List<string> { "+20 | 20/10/2024 14:48:05", "-13 | 15/09/2024 14:40:05", "+10 | 27/09/2024 17:12:05", "+30 | 05/10/2024 10:10:05" },
+    new List<string> { "-270 | 20/10/2024 14:48:05", "+990 | 15/09/2024 14:40:05", "+432 | 27/09/2024 17:12:05", "+365", "-300 | 20/10/2024 10:30:05" }
+};
+
+List<decimal> accountsMoneyList = new List<decimal>
+{
+    980.78m,
+    0,
+    437.23m,
+    55.5m,
+    1589.1m
+};
+
+
+#endregion
+
+//Output encoding
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 #region USER LOGIN
@@ -75,7 +95,10 @@ do {
     if (!userAccount.Equals("") && !userPin.Equals("")) userExists = true;
     else userExists = false;
 
-    if (pinIndex == accountIndex) positionCorrect = true;
+    if (pinIndex == accountIndex)
+    {
+        positionCorrect = true;
+    }
     else positionCorrect = false;
 
     if(!userExists || !positionCorrect)
@@ -85,11 +108,18 @@ do {
 
 } while (!userExists || !positionCorrect);
 
+
+currentUser = pinIndex;
+
+List<string> movementList = accountsMovementList[currentUser];
+currentMoney = accountsMoneyList[currentUser];
+
 #endregion
 
+#region ACCOUNT MOVEMENTS
 do
 {
-    //Console.Clear();
+    Console.Clear();
 
     Console.WriteLine(@"Welcome to your bank account! What do you want to do?
 
@@ -126,16 +156,20 @@ do
                         if (input != null && input.Length > 0 && decimal.TryParse(input, out income))
                         {
                             income = Math.Abs(decimal.Parse(input));
-                            currentMoney += income;
-                            movementList.Add("+" + income + " | " + DateTime.Now);
-                            Console.WriteLine(income + " $ were added to your account.");
+
+                            if (income <= maxMoneyTransaction)
+                            {
+                                currentMoney += income;
+                                movementList.Add("+" + income + " | " + DateTime.Now);
+                                Console.WriteLine(income + " $ were added to your account.");
+                            }
+                            else Console.WriteLine($"ERROR: The top amount you can deposit is {maxMoneyTransaction}. Try again.");
                         }
                         else
                         {
-                            Console.WriteLine(
-                                "ERROR: Please write a numeric value: ");
+                            Console.WriteLine("ERROR: Please write a numeric value: ");
                         }
-                    } while (!decimal.TryParse(input, out income));
+                    } while (!decimal.TryParse(input, out income) || income > maxMoneyTransaction);
                     break;
 
                 case 2:
@@ -154,7 +188,7 @@ do
                             {
                                 currentMoney -= outcome;
                                 movementList.Add("-" + outcome + " | " + DateTime.Now);
-                                Console.WriteLine(outcome + " $ were subtracted from account.");
+                                Console.WriteLine(outcome + " $ were subtracted from your account.");
                             }
                             else
                             {
@@ -232,4 +266,4 @@ do
     }
 
 } while (!exit);
-
+#endregion
