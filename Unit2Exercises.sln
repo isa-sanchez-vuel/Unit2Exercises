@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoBankAccount", "MonoBankAccount\MonoBankAccount.csproj", "{37C2C87A-B0FC-4945-B11B-D36E0E22AA51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoBankAccount", "MonoBankAccount\MonoBankAccount.csproj", "{37C2C87A-B0FC-4945-B11B-D36E0E22AA51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiBankAccount", "MultiBankAccount\MultiBankAccount.csproj", "{7D1612B1-4B71-4B98-AA12-6BE40414C666}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiBankAccount", "MultiBankAccount\MultiBankAccount.csproj", "{7D1612B1-4B71-4B98-AA12-6BE40414C666}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

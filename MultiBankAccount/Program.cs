@@ -3,6 +3,7 @@ int accountIndex = -1;
 int pinIndex = -2;
 string userAccount = "";
 string userPin = "";
+int loginTries = 0;
 
 bool userExists = false;
 bool positionCorrect = false;
@@ -63,6 +64,12 @@ Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 #region USER LOGIN
 do {
+    Console.Clear();
+
+    if (loginTries > 0 && (!userExists || !positionCorrect)) Console.WriteLine("Insert valid account number and pin:");
+
+    Console.WriteLine("========= USER SIGN IN =========");
+
     Console.WriteLine("Account number (XXXXXXXXXX): ");
 
     Console.Write("=> ");
@@ -106,7 +113,7 @@ do {
     }
     else positionCorrect = false;
 
-    if(!userExists || !positionCorrect) Console.WriteLine("Insert valid account number and pin:");
+    loginTries++;
 
 } while (!userExists || !positionCorrect);
 
@@ -122,6 +129,7 @@ do
 
     Console.WriteLine($@"
 ==============================================================
+|| Hello USER{currentUser+20}-{userAccount}!                                 ||
 || Welcome to your bank account! What do you want to do?    ||
 ||                                                          ||
 ||	1 - Money Income                                    ||
@@ -132,7 +140,7 @@ do
 ||	6 - Show current money                              ||
 ||	{EXIT_NUMBER} - Exit                                            ||
 ||                                                          ||
-|| Please write the option's number:                        ||
+|| Please choose an option:                                 ||
 ==============================================================");
 
     Console.Write("=> ");
